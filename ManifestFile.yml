@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-testing
+spec:
+  containers:
+    - image: ammonzerklese/kubernetes_cloud_stuff:v3.0
+      name: k8s-testing
+      ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          path: /healthy
+          port: 80
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 80
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
